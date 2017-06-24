@@ -3,7 +3,6 @@ import { Router, browserHistory, Route, Link, IndexRoute } from 'react-router'
 import logo from './logo.svg'
 import './App.css'
 import { getHeadlines } from './common/helper'
-import Navbar from './components/Navbar'
 import SettingView from './views/setting'
 import HomeView from './views/home'
 import DrawerView from './views/drawer'
@@ -28,40 +27,7 @@ const Page = ({ title }) => (
         <Link to="/settings">Settings</Link>
       </p>
     </div>
-);
-
-class Drawer extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            headlines: []
-        }
-    }
-
-    componentWillMount() {
-        getHeadlines('hacker-news', 'top')
-            .then(res => {
-                this.setState({
-                    headlines: res.articles
-                })
-            })
-    }
-
-    render() {
-        return (
-          <div>
-            <iframe src="http://www.google.com" width="300" height="300"></iframe>
-            <ul>
-              { this.state.headlines.map(h => {
-                return (
-                    <li key={ h.url }><a href={ h.url }>{ h.title} }</a></li>
-                )
-              })}
-            </ul>
-          </div>
-        )
-    }
-}
+)
 
 class App extends Component {
   render() {

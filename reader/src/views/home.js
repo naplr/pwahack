@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
 import { getHeadlines } from '../common/helper'
+import { selectArticle } from '../actions/data'
 
-export default class HomeView extends Component {
+class HomeView extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -23,13 +24,14 @@ export default class HomeView extends Component {
     }
 
     render() {
+        const { selectArticle } = this.props
         return (
           <div>
             <h1>Home</h1>
             <ul>
               { this.state.headlines.map(h => {
                 return (
-                    <li key={ h.url }><a href={ h.url }>{ h.title} }</a></li>
+                    <li key={ h.url } onClick={ e => selectArticle(h) }>{ h.title} }</li>
                 )
               })}
             </ul>
@@ -37,3 +39,13 @@ export default class HomeView extends Component {
         )
     }
 }
+
+function mapStateToProps(state, ownProps) {
+    return {
+        articles: state.data.selectedArticles
+    }
+}
+
+export default connect(mapStateToProps, {
+    selectArticle
+})(HomeView)
