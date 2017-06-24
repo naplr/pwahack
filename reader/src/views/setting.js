@@ -9,18 +9,7 @@ export default class SettingView extends Component {
     render() {
         return (
           <div>
-                            <h1>Setting</h1>
-            <div>
-                <p>
-                <Link to="/">Home</Link>
-                </p>
-                <p>
-                <Link to="/about">About</Link>
-                </p>
-                <p>
-                <Link to="/setting">Settings</Link>
-                </p>
-            </div>
+            <h1>Setting</h1>
           </div>
         )
     }

@@ -11,7 +11,6 @@ import {
 
 export default class AppLayout extends Component {
     onTabChange(tabId) {
-        console.log(tabId)
         switch(tabId) {
             case 0:
                 browserHistory.push('/setting')
@@ -30,17 +29,16 @@ export default class AppLayout extends Component {
           <div style={{height: '300px', position: 'relative'}}>
             <Layout fixedHeader fixedTabs>
                 <Header>
-                    <HeaderRow title="Title" />
+                    {/*<HeaderRow title="Title" />*/}
                     <HeaderTabs ripple activeTab={1} onChange={ this.onTabChange }>
                         <Tab>Setting</Tab>
                         <Tab>Home</Tab>
                         <Tab>Drawer</Tab>
                     </HeaderTabs>
                 </Header>
-                <Drawer title="Title" />
+                {/*<Drawer title="Title" />*/}
                 <Content>
                     { this.props.children }
-                    {/*<div className="page-content">You can add logic to update the content of this container based on the "activeTab" receive in the `onChange` callback.</div>*/}
                 </Content>
             </Layout>
           </div>
