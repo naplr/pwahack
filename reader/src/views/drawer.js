@@ -6,16 +6,13 @@ class DrawerView extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            selectedUrl: 'http://www.google.com'
         }
 
         this.onClick = this.onClick.bind(this)
     }
 
     onClick(link) {
-        this.setState({
-            selectedUrl: link
-        })
+        this.setState({ selectedUrl: link })
     }
 
     render() {
@@ -23,11 +20,10 @@ class DrawerView extends Component {
         return (
           <div>
             <h1>Drawer</h1>   
-            <iframe src={ this.state.selectedUrl } width="300" height="100vw"></iframe>
               <ul>
                 { articles.map(a => {
                     return (
-                        <li key={ a.url } onClick={ e => this.onClick(a.url) }>{ a.title} }</li>
+                        <Link to={ `/view?url=${a.url}` } key={ a.url }><li>{ a.title} }</li></Link>
                     )
                 }) }
             </ul>

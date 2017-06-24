@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { Router, browserHistory, Route, Link, IndexRoute } from 'react-router'
 import logo from './logo.svg'
 import './App.css'
-import { getHeadlines } from './common/helper'
 import SettingView from './views/setting'
 import HomeView from './views/home'
 import DrawerView from './views/drawer'
+import WebView from './views/web'
 import AppLayout from './components/AppLayout'
 
 const Page = ({ title }) => (
@@ -38,6 +38,7 @@ class App extends Component {
           <Route path="/drawer" component={ DrawerView } />
           <Route path="/setting" component={ SettingView } />
         </Route>
+        <Route path="/view" component={ WebView } />
       </Router>
     );
   }

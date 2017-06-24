@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
 import { 
     Content, 
-    Drawer, 
     Header,
     HeaderRow,
     HeaderTabs,
@@ -29,14 +28,13 @@ export default class AppLayout extends Component {
           <div style={{height: '100vh', position: 'relative'}}>
             <Layout fixedHeader fixedTabs>
                 <Header>
-                    {/*<HeaderRow title="Title" />*/}
+                    {/*<HeaderRow title="RDER" />*/}
                     <HeaderTabs ripple activeTab={1} onChange={ this.onTabChange }>
                         <Tab>Setting</Tab>
                         <Tab>Home</Tab>
                         <Tab>Drawer</Tab>
                     </HeaderTabs>
                 </Header>
-                {/*<Drawer title="Title" />*/}
                 <Content>
                     { this.props.children }
                 </Content>
