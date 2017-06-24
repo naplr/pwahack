@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
+import 'react-mdl/extra/material.css'
+import 'react-mdl/extra/material.js'
 
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
@@ -16,9 +18,11 @@ const finalCreateStore = compose(
 export const store = finalCreateStore(reducers)
 
 ReactDOM.render(
+    <div>
   <Provider store={ store }>
     <App />  
   </Provider>
+  </div>
   ,document.getElementById('root')
 )
 

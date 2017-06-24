@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
-import { Router, browserHistory, Route, Link } from 'react-router'
+import { Router, browserHistory, Route, Link, IndexRoute } from 'react-router'
 import logo from './logo.svg'
 import './App.css'
 import { getHeadlines } from './common/helper'
+import Navbar from './components/Navbar'
+import SettingView from './views/setting'
+import HomeView from './views/home'
+import DrawerView from './views/drawer'
+import AppLayout from './components/AppLayout'
 
 const Page = ({ title }) => (
     <div className="App">
@@ -25,15 +30,7 @@ const Page = ({ title }) => (
     </div>
 );
 
-const Home = (props) => (
-  <Page title="Home"/>
-);
-
-// const About = (props) => (
-//   <Page title="About"/>
-// );
-
-class About extends Component {
+class Drawer extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -66,36 +63,18 @@ class About extends Component {
     }
 }
 
-const Settings = (props) => (
-  <Page title="Settings"/>
-);
-
 class App extends Component {
   render() {
     return (
-      <Router history={browserHistory}>
-        <Route path="/" component={Home}/>
-        <Route path="/about" component={About}/>
-        <Route path="/settings" component={Settings}/>
+      <Router history={ browserHistory }>
+        <Route path="/" component={ AppLayout }>
+          <IndexRoute component={ HomeView } />
+          <Route path="/drawer" component={ DrawerView } />
+          <Route path="/setting" component={ SettingView } />
+        </Route>
       </Router>
     );
   }
 }
 
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <div className="App-header">
-//           <img src={logo} className="App-logo" alt="logo" />
-//           <h2>Welcome to React</h2>
-//         </div>
-//         <p className="App-intro">
-//           To get started, edit <code>src/App.js</code> and save to reload.
-//         </p>
-//       </div>
-//     );
-//   }
-// }
-
-export default App;
+export default App
