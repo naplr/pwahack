@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Router, browserHistory, Route, Link } from 'react-router'
 import logo from './logo.svg'
 import './App.css'
+import { getHeadlines } from './common/helper'
 
 const Page = ({ title }) => (
     <div className="App">
@@ -28,9 +29,42 @@ const Home = (props) => (
   <Page title="Home"/>
 );
 
-const About = (props) => (
-  <Page title="About"/>
-);
+// const About = (props) => (
+//   <Page title="About"/>
+// );
+
+class About extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            headlines: []
+        }
+    }
+
+    componentWillMount() {
+        getHeadlines('hacker-news', 'top')
+            .then(res => {
+                this.setState({
+                    headlines: res.articles
+                })
+            })
+    }
+
+    render() {
+        return (
+          <div>
+            <iframe src="http://www.google.com" width="300" height="300"></iframe>
+            <ul>
+              { this.state.headlines.map(h => {
+                return (
+                    <li key={ h.url }><a href={ h.url }>{ h.title} }</a></li>
+                )
+              })}
+            </ul>
+          </div>
+        )
+    }
+}
 
 const Settings = (props) => (
   <Page title="Settings"/>
