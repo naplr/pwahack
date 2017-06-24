@@ -26,7 +26,7 @@ export default class AppLayout extends Component {
 
     render() {
         return (
-          <div style={{height: '300px', position: 'relative'}}>
+          <div style={{height: '100vh', position: 'relative'}}>
             <Layout fixedHeader fixedTabs>
                 <Header>
                     {/*<HeaderRow title="Title" />*/}

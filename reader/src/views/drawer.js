@@ -10,6 +10,7 @@ export default class DrawerView extends Component {
         return (
           <div>
             <h1>Drawer</h1>   
+            <iframe src="http://www.google.com" width="300" height="300"></iframe>
           </div>
         )
     }
