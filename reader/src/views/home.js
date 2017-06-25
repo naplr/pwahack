@@ -47,5 +47,5 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default connect(mapStateToProps, {
-    selectArticle
+    selectArticle,
 })(HomeView)

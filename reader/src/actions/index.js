@@ -14,7 +14,6 @@ export function getRequest(urlPath, params={}) {
 
 export function postRequest(urlPath, data) {
     console.log(data)
-    console.log(urlPath)
     return new Promise((resolve, reject) => {
         fetch(`${urlPath}`, { 
             method: 'POST',

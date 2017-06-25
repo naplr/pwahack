@@ -9,7 +9,7 @@ import {
     IconButton,
     Icon } from 'react-mdl'
 
-import { removeArticle } from '../actions/data'
+import { removeArticle, initArticles } from '../actions/data'
 
 class DrawerView extends Component {
     constructor(props) {

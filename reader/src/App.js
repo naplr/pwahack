@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Router, browserHistory, Route, Link, IndexRoute } from 'react-router'
+import { connect } from 'react-redux'
 import logo from './logo.svg'
 import './App.css'
 import SettingView from './views/setting'
@@ -7,6 +8,8 @@ import HomeView from './views/home'
 import DrawerView from './views/drawer'
 import WebView from './views/web'
 import AppLayout from './components/AppLayout'
+import { initDB } from './common/dbclient'
+import { initArticles } from './actions/data'
 
 const Page = ({ title }) => (
     <div className="App">
@@ -30,18 +33,28 @@ const Page = ({ title }) => (
 )
 
 class App extends Component {
-  render() {
-    return (
-      <Router history={ browserHistory }>
-        <Route path="/" component={ AppLayout }>
-          <IndexRoute component={ HomeView } />
-          <Route path="/drawer" component={ DrawerView } />
-          <Route path="/setting" component={ SettingView } />
-        </Route>
-        <Route path="/view" component={ WebView } />
-      </Router>
-    );
-  }
+    componentWillMount() {
+        initDB(this.props.initArticles)
+    }
+
+    render() {
+        return (
+            <Router history={ browserHistory }>
+              <Route path="/" component={ AppLayout }>
+                <IndexRoute component={ HomeView } />
+                <Route path="/drawer" component={ DrawerView } />
+                <Route path="/setting" component={ SettingView } />
+              </Route>
+              <Route path="/view" component={ WebView } />
+            </Router>
+        );
+    }
 }
 
-export default App
+function mapStateToProps(state, ownProps) {
+    return {}
+}
+
+export default connect(mapStateToProps, {
+    initArticles
+})(App)

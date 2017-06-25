@@ -1,4 +1,7 @@
-import { SELECT_ARTICLE, REMOVE_ARTICLE } from './types'
+import { 
+    SELECT_ARTICLE, 
+    REMOVE_ARTICLE, 
+    INIT_ARTICLES } from './types'
 
 export function selectArticle(article) {
     return {
@@ -8,9 +11,15 @@ export function selectArticle(article) {
 }
 
 export function removeArticle(article) {
-    console.log(article)
     return {
         type: REMOVE_ARTICLE,
         article: article
+    }
+}
+
+export function initArticles(articles) {
+    return {
+        type: INIT_ARTICLES,
+        articles: articles
     }
 }
