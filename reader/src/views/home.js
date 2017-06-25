@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import Cards, { Card } from 'react-swipe-card'
+import _ from 'lodash'
 
 import { getHeadlines } from '../common/helper'
 import { selectArticle } from '../actions/data'
@@ -25,16 +27,24 @@ class HomeView extends Component {
 
     render() {
         const { selectArticle } = this.props
+        if (_.isEmpty(this.state.headlines)) {
+            return <div>Loading..</div>
+        }
+
         return (
           <div>
-            <h1>Home</h1>
-            <ul>
+            <Cards onEnd={ e => alert('done') } className='master-root'>
               { this.state.headlines.map(h => {
-                return (
-                    <li key={ h.url } onClick={ e => selectArticle(h) }>{ h.title} }</li>
-                )
+                  return (
+                    <Card
+                      onSwipeLeft={e => console.log('left')}
+                      onSwipeRight={ e => selectArticle(h) }
+                    >
+                      { h.title }
+                    </Card>
+                  )
               })}
-            </ul>
+            </Cards>
           </div>
         )
     }
