@@ -1,10 +1,18 @@
 import _ from 'lodash'
 
-import { SELECT_ARTICLE, REMOVE_ARTICLE, INIT_ARTICLES } from '../actions/types'
+import { 
+    SELECT_ARTICLE, 
+    REMOVE_ARTICLE, 
+    GET_NEW_ARTICLES,
+    INIT_SOURCES,
+    INIT_ARTICLES,
+    SELECT_SOURCE,
+    REMOVE_SOURCE } from '../actions/types'
 import { addSelectedArticle, removeSelectedArticle } from '../common/dbclient'
 
 const INITIAL_STATE = {
-    selectedArticles: []
+    selectedArticles: [],
+    newArticles: []
 }
 
 export default function(state=INITIAL_STATE, action) {
@@ -21,6 +29,11 @@ export default function(state=INITIAL_STATE, action) {
             removeSelectedArticle(action.article)
             const removedList = _.reject(state.selectedArticles, action.article)
             return { ...state, selectedArticles: removedList }
+        case GET_NEW_ARTICLES:
+            const articles = action.articles
+            const newArticles = _.difference(action.articles, state.selectedArticles)
+            return { ...state, newArticles: newArticles }
+
         case INIT_ARTICLES:
             return { ...state, selectedArticles: action.articles }
         default:

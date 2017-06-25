@@ -10,41 +10,26 @@ import {
     Button } from 'react-mdl'
 
 import { getHeadlines } from '../common/helper'
-import { selectArticle } from '../actions/data'
+import { selectArticle, getNewArticles } from '../actions/data'
 
 class HomeView extends Component {
     constructor(props) {
         super(props)
+        console.log('cons')
         this.state = {
             selectedSource: 'hacker-news',
-            headlines: [],
-            noCard: true
+            noCard: _.isEmpty(props.newArticles)
         }
 
-        this.getNewHeadlines = this.getNewHeadlines.bind(this)
+        this.getMore = this.getMore.bind(this)
     }
 
-    getNewHeadlines() {
-        // TODO: Move this to redux, so no need for reload everytime we change tab.
-        const { articles } = this.props
-        getHeadlines('hacker-news', 'latest')
-            .then(res => {
-                console.log(articles)
-                const newArticles = res.articles.map(a => {
-                    if (!_.includes(articles, a)) {
-                        return a
-                    }
-                })
-
-                this.setState({
-                    headlines: newArticles,
-                    noCard: false
-                })
+    componentWillReceiveProps(nextProps) {
+        if (!_.isEmpty(nextProps.newArticles)) {
+            this.setState({
+                noCard: false
             })
-    }
-
-    componentWillMount() {
-        this.getNewHeadlines()
+        }
     }
 
     swipeLeft(a) {
@@ -56,7 +41,7 @@ class HomeView extends Component {
     }
 
     getMore() {
-        this.getNewHeadlines()
+        this.props.getNewArticles(this.state.selectedSource)
     }
 
     done() {
@@ -66,11 +51,7 @@ class HomeView extends Component {
     }
 
     render() {
-        const { selectArticle } = this.props
-        if (_.isEmpty(this.state.headlines)) {
-            return <div>Loading..</div>
-        }
-
+        const { newArticles } = this.props
         if (this.state.noCard) {
             return (
                 <div className="rd-app">
@@ -82,7 +63,7 @@ class HomeView extends Component {
         return (
           <div style={{ height: '80vh' }}>
             <Cards onEnd={ e => this.done() } className='master-root'>
-              { this.state.headlines.map(h => {
+              { newArticles.map(h => {
                   return (
                     <Card 
                       onSwipeLeft={ e => this.swipeLeft(h) }
@@ -109,10 +90,12 @@ class HomeView extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        articles: state.data.selectedArticles
+        selectedArticles: state.data.selectedArticles,
+        newArticles: state.data.newArticles
     }
 }
 
 export default connect(mapStateToProps, {
     selectArticle,
+    getNewArticles
 })(HomeView)
