@@ -24,6 +24,8 @@ export function removeArticle(article) {
 
 export function getNewArticles(source) {
     const filter = SOURCES[source].filter
+    console.log(source)
+    console.log(filter)
     return (dispatch) => {
         getHeadlines(source, filter)
             .then(res => {
@@ -36,8 +38,6 @@ export function getNewArticles(source) {
 }
 
 export function updateSources(sources) {
-    console.log('update')
-    console.log(sources)
     return {
         type: UPDATE_SOURCE,
         sources: sources

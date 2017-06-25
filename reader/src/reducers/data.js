@@ -31,7 +31,16 @@ export default function(state=INITIAL_STATE, action) {
             return { ...state, selectedArticles: removedList }
         case GET_NEW_ARTICLES:
             const articles = action.articles
-            const newArticles = _.difference(action.articles, state.selectedArticles)
+            const selectedUrls = state.selectedArticles.map(s => {
+                return s.url
+            })
+
+            const newArticles = action.articles.map(a => {
+                if (!_.includes(selectedUrls, a.url)) {
+                    return a
+                }
+            })
+            // _.difference(action.articles, state.selectedArticles)
             return { ...state, newArticles: newArticles }
         case UPDATE_SOURCE:
             return { ...state, sources: action.sources }
