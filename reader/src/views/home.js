@@ -91,7 +91,8 @@ class HomeView extends Component {
 function mapStateToProps(state, ownProps) {
     return {
         selectedArticles: state.data.selectedArticles,
-        newArticles: state.data.newArticles
+        newArticles: state.data.newArticles,
+        sources: state.data.sources
     }
 }
 

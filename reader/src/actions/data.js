@@ -4,9 +4,9 @@ import {
     GET_NEW_ARTICLES,
     INIT_ARTICLES, 
     INIT_SOURCES,
-    SELECT_SOURCE,
-    REMOVE_SOURCE } from './types'
+    UPDATE_SOURCE } from './types'
 import { getHeadlines } from '../common/helper'
+import { SOURCES } from '../common/constants'
 
 export function selectArticle(article) {
     return {
@@ -31,6 +31,13 @@ export function getNewArticles(source) {
                     articles: res.articles
                 })
             })
+    }
+}
+
+export function updateSources(sources) {
+    return {
+        type: UPDATE_SOURCE,
+        sources: sources
     }
 }
 

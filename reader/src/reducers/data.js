@@ -6,13 +6,13 @@ import {
     GET_NEW_ARTICLES,
     INIT_SOURCES,
     INIT_ARTICLES,
-    SELECT_SOURCE,
-    REMOVE_SOURCE } from '../actions/types'
+    UPDATE_SOURCE } from '../actions/types'
 import { addSelectedArticle, removeSelectedArticle } from '../common/dbclient'
 
 const INITIAL_STATE = {
     selectedArticles: [],
-    newArticles: []
+    newArticles: [],
+    sources: []
 }
 
 export default function(state=INITIAL_STATE, action) {
@@ -33,7 +33,8 @@ export default function(state=INITIAL_STATE, action) {
             const articles = action.articles
             const newArticles = _.difference(action.articles, state.selectedArticles)
             return { ...state, newArticles: newArticles }
-
+        case UPDATE_SOURCE:
+            return { ...state, sources: action.sources }
         case INIT_ARTICLES:
             return { ...state, selectedArticles: action.articles }
         default:
