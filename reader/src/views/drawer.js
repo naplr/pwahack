@@ -9,6 +9,8 @@ import {
     IconButton,
     Icon } from 'react-mdl'
 
+import { removeArticle } from '../actions/data'
+
 class DrawerView extends Component {
     constructor(props) {
         super(props)
@@ -19,16 +21,17 @@ class DrawerView extends Component {
     }
 
     renderArticleListItem(a) {
+        const { removeArticle } = this.props
         return (
           <ListItem key={ a.url }>
               <ListItemContent>
-                { a.author }
+                { a.title }
               </ListItemContent>
             <ListItemAction>
               <Link to={ `view?url=${a.url}` }>
                 <IconButton name="remove_red_eye" />
               </Link>
-              <IconButton name="check" />
+              <IconButton onClick={ e => removeArticle(a) } name="check" />
             </ListItemAction>
           </ListItem>
         )
@@ -39,7 +42,7 @@ class DrawerView extends Component {
         return (
           <div>
             <h1>Drawer</h1>   
-              <List threeline>
+              <List>
                 { articles.map(a => this.renderArticleListItem(a))}
               </List>
           </div>
@@ -54,4 +57,5 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default connect(mapStateToProps, {
+    removeArticle
 })(DrawerView)
