@@ -41,7 +41,6 @@ class DrawerView extends Component {
         const { articles } = this.props
         return (
           <div>
-            <h1>Drawer</h1>   
               <List>
                 { articles.map(a => this.renderArticleListItem(a))}
               </List>
