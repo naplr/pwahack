@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
+import { 
+    List, 
+    ListItem,
+    ListItemContent,
+    ListItemAction,
+    IconButton,
+    Icon } from 'react-mdl'
 
 class DrawerView extends Component {
     constructor(props) {
@@ -8,11 +15,23 @@ class DrawerView extends Component {
         this.state = {
         }
 
-        this.onClick = this.onClick.bind(this)
+        this.renderArticleListItem = this.renderArticleListItem.bind(this)
     }
 
-    onClick(link) {
-        this.setState({ selectedUrl: link })
+    renderArticleListItem(a) {
+        return (
+          <ListItem key={ a.url }>
+              <ListItemContent>
+                { a.author }
+              </ListItemContent>
+            <ListItemAction>
+              <Link to={ `view?url=${a.url}` }>
+                <IconButton name="remove_red_eye" />
+              </Link>
+              <IconButton name="check" />
+            </ListItemAction>
+          </ListItem>
+        )
     }
 
     render() {
@@ -20,13 +39,9 @@ class DrawerView extends Component {
         return (
           <div>
             <h1>Drawer</h1>   
-              <ul>
-                { articles.map(a => {
-                    return (
-                        <Link to={ `/view?url=${a.url}` } key={ a.url }><li>{ a.title} }</li></Link>
-                    )
-                }) }
-            </ul>
+              <List threeline>
+                { articles.map(a => this.renderArticleListItem(a))}
+              </List>
           </div>
         )
     }
