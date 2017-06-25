@@ -20,17 +20,31 @@ class HomeView extends Component {
             headlines: [],
             noCard: true
         }
+
+        this.getNewHeadlines = this.getNewHeadlines.bind(this)
     }
 
-    componentWillMount() {
+    getNewHeadlines() {
         // TODO: Move this to redux, so no need for reload everytime we change tab.
-        getHeadlines('hacker-news', 'top')
+        const { articles } = this.props
+        getHeadlines('hacker-news', 'latest')
             .then(res => {
+                console.log(articles)
+                const newArticles = res.articles.map(a => {
+                    if (!_.includes(articles, a)) {
+                        return a
+                    }
+                })
+
                 this.setState({
-                    headlines: res.articles,
+                    headlines: newArticles,
                     noCard: false
                 })
             })
+    }
+
+    componentWillMount() {
+        this.getNewHeadlines()
     }
 
     swipeLeft(a) {
@@ -42,15 +56,7 @@ class HomeView extends Component {
     }
 
     getMore() {
-        getHeadlines(this.state.selectedSource, 'top')
-            .then(res => {
-                const articles = this.state.headlines
-                articles.push.apply(res.articles)
-                this.setState({
-                    headlines: articles,
-                    noCard: false
-                })
-            })
+        this.getNewHeadlines()
     }
 
     done() {
