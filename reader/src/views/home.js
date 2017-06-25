@@ -6,7 +6,8 @@ import _ from 'lodash'
 import { 
     Card as MdlCard, 
     CardTitle,
-    CardText } from 'react-mdl'
+    CardText,
+    Button } from 'react-mdl'
 
 import { getHeadlines } from '../common/helper'
 import { selectArticle } from '../actions/data'
@@ -15,7 +16,9 @@ class HomeView extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            headlines: []
+            selectedSource: 'hacker-news',
+            headlines: [],
+            noCard: true
         }
     }
 
@@ -24,9 +27,36 @@ class HomeView extends Component {
         getHeadlines('hacker-news', 'top')
             .then(res => {
                 this.setState({
-                    headlines: res.articles
+                    headlines: res.articles,
+                    noCard: false
                 })
             })
+    }
+
+    swipeLeft(a) {
+        console.log('left')
+    }
+
+    swipeRight(a) {
+        this.props.selectArticle(a)
+    }
+
+    getMore() {
+        getHeadlines(this.state.selectedSource, 'top')
+            .then(res => {
+                const articles = this.state.headlines
+                articles.push.apply(res.articles)
+                this.setState({
+                    headlines: articles,
+                    noCard: false
+                })
+            })
+    }
+
+    done() {
+        this.setState({
+            noCard: true
+        })
     }
 
     render() {
@@ -35,14 +65,22 @@ class HomeView extends Component {
             return <div>Loading..</div>
         }
 
+        if (this.state.noCard) {
+            return (
+                <div className="rd-app">
+                  <Button raised accent ripple onClick={ e => this.getMore() }>Get More</Button>
+                </div>
+            )
+        }
+
         return (
-          <div style={{ height: '80vh'}}>
-            <Cards onEnd={ e => alert('done') } className='master-root'>
+          <div style={{ height: '80vh' }}>
+            <Cards onEnd={ e => this.done() } className='master-root'>
               { this.state.headlines.map(h => {
                   return (
                     <Card 
-                      onSwipeLeft={e => console.log('left')}
-                      onSwipeRight={ e => selectArticle(h) }
+                      onSwipeLeft={ e => this.swipeLeft(h) }
+                      onSwipeRight={ e => this.swipeRight(h) }
                       key={ h.url }
                     >
                     <MdlCard shadow={0} style={{ width: '70vw', margin: 'auto'}}>
