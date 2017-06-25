@@ -23,8 +23,9 @@ export function removeArticle(article) {
 }
 
 export function getNewArticles(source) {
+    const filter = SOURCES[source].filter
     return (dispatch) => {
-        getHeadlines('hacker-news', 'latest')
+        getHeadlines(source, filter)
             .then(res => {
                 dispatch({
                     type: GET_NEW_ARTICLES,
@@ -35,6 +36,8 @@ export function getNewArticles(source) {
 }
 
 export function updateSources(sources) {
+    console.log('update')
+    console.log(sources)
     return {
         type: UPDATE_SOURCE,
         sources: sources

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import Cards, { Card } from 'react-swipe-card'
 import _ from 'lodash'
+import { SelectField, Option } from 'react-mdl-extra'
 import { 
     Card as MdlCard, 
     CardTitle,
@@ -11,13 +12,13 @@ import {
 
 import { getHeadlines } from '../common/helper'
 import { selectArticle, getNewArticles } from '../actions/data'
+import { SOURCES } from '../common/constants'
 
 class HomeView extends Component {
     constructor(props) {
         super(props)
-        console.log('cons')
         this.state = {
-            selectedSource: 'hacker-news',
+            selectedSource: '',
             noCard: _.isEmpty(props.newArticles)
         }
 
@@ -50,12 +51,30 @@ class HomeView extends Component {
         })
     }
 
+    selectSource(e) {
+        this.setState({
+            selectedSource: e
+        })
+    }
+
     render() {
-        const { newArticles } = this.props
+        const { newArticles, sources } = this.props
         if (this.state.noCard) {
             return (
+                <div>
+                <center style={{ marginTop: "15px" }}>
+                <SelectField label={'Select Source'} value={ this.state.selectedSource } onChange={ e => this.selectSource(e) }>
+                  { sources.map(s => {
+                      return (
+                        <Option key={s} value={s}>{ SOURCES[s].name }</Option>
+                      )
+                  })}
+                </SelectField>
+                </center>
                 <div className="rd-app">
                   <Button raised accent ripple onClick={ e => this.getMore() }>Get More</Button>
+                </div>
+
                 </div>
             )
         }

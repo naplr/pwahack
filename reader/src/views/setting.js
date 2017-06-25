@@ -6,9 +6,14 @@ import {
     TableHeader } from 'react-mdl'
 
 import { SOURCES } from '../common/constants'
+import { updateSources } from '../actions/data'
 
-export default class SettingView extends Component {
+class SettingView extends Component {
     componentWillMount() {
+    }
+
+    onChange(e) {
+        this.props.updateSources(e)
     }
 
     render() {
@@ -20,7 +25,7 @@ export default class SettingView extends Component {
               style={{ width: '100vw' }}
               rowKeyColumn="source"
               rows={ Object.keys(SOURCES).map(key => SOURCES[key]) }
-              onSelectionChanged={ e => {console.log(e)} }
+              onSelectionChanged={ e => { this.onChange(e) } }
             >
                 <TableHeader name="name">Source</TableHeader>
                 <TableHeader name="filter">Type</TableHeader>
@@ -29,3 +34,13 @@ export default class SettingView extends Component {
         )
     }
 }
+
+function mapStateToProps(state, ownProps) {
+    return {
+        sources: state.data.sources
+    }
+}
+
+export default connect(mapStateToProps, {
+    updateSources,
+})(SettingView)
